@@ -31,7 +31,7 @@
 
 ● BoardMain : 메인클래스
 
-##쿼리문
+## 쿼리문
 ● 게시글쿼리문
 ```
 CREATE TABLE "DatabasePjt"."BOARD" 
