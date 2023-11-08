@@ -2,7 +2,9 @@
 IntelJ기준
 1. Settings - Plugins - Database Navigator 설치
 2. 상단 DB Navigator - Database Browser
-3. +버튼 클릭 후 Connect type - Custom
+3. +버튼 클릭 후 Oracle선택
+  
+   		Connect type - Custom
    
    		URL - 오라클실행환경에 맞게
    
