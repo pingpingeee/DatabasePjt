@@ -19,7 +19,7 @@
 
 ● BoarVO : 데이터를 담은 객체 정의클래스
 ### Package model
-● BoardDAOImpl : 데이터 처리 담당클래스
+● BoardDAOImpl : 데이터 처리 담당클래스 / 해당 클래스에서 DB설정
 ### Package view
 ● BoardInsert : 게시글작성클래스
 
