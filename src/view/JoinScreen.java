@@ -1,20 +1,20 @@
 package view;
 
 import control.SignUp_InVO;
-import model.SignUp_InImpl;
+import model.Join_LoginDAOImpl;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SignUp_Screen extends JFrame {
+public class JoinScreen extends JFrame {
     //회원가입
     private JTextField nickname;
     private JTextField account;
     private JPasswordField password;
 
-    public  SignUp_Screen(){
+    public JoinScreen(){
         setTitle("회원가입");
         setBounds(new Rectangle(0, 0, 300, 400));
         getContentPane().setLayout(null);
@@ -72,7 +72,7 @@ public class SignUp_Screen extends JFrame {
                 String enteredAccount = account.getText();
                 char[] enteredPassword = password.getPassword();
                 String enteredPasswordString = new String(enteredPassword);
-                SignUp_InImpl signUpIn = new SignUp_InImpl(SignUp_Screen.this);
+                Join_LoginDAOImpl signUpIn = new Join_LoginDAOImpl(JoinScreen.this);
 
                 SignUp_InVO vo = new SignUp_InVO();
                 vo.setNickname(enteredNick);
@@ -89,7 +89,7 @@ public class SignUp_Screen extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Main_SignIn_Screen();
+                new LoginScreen();
                 setVisible(false);
             }
         });

@@ -1,19 +1,19 @@
 package view;
 
 import control.SignUp_InVO;
-import model.SignUp_InImpl;
+import model.Join_LoginDAOImpl;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main_SignIn_Screen extends JFrame {
+public class LoginScreen extends JFrame {
     private JTextField nickname;
     private JTextField account;
     private JPasswordField password;
 
-    public Main_SignIn_Screen() {
+    public LoginScreen() {
         setTitle("로그인");
         setBounds(new Rectangle(0, 0, 300, 400));
         getContentPane().setLayout(null);
@@ -58,7 +58,7 @@ public class Main_SignIn_Screen extends JFrame {
                 String enteredAccount = account.getText();
                 char[] enteredPassword = password.getPassword();
                 String enteredPasswordString = new String(enteredPassword);
-                SignUp_InImpl signUpIn = new SignUp_InImpl(Main_SignIn_Screen.this);
+                Join_LoginDAOImpl signUpIn = new Join_LoginDAOImpl(LoginScreen.this);
 
                 SignUp_InVO vo = new SignUp_InVO();
                 vo.setAccount(enteredAccount);
@@ -75,7 +75,7 @@ public class Main_SignIn_Screen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                new SignUp_Screen();
+                new JoinScreen();
                 setVisible(false);
             }
         });

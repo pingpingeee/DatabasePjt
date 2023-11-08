@@ -1,10 +1,9 @@
 package model;
 
-import com.sun.tools.javac.Main;
 import control.SignUp_InVO;
 import view.BoardList;
-import view.Main_SignIn_Screen;
-import view.SignUp_Screen;
+import view.LoginScreen;
+import view.JoinScreen;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -12,18 +11,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SignUp_InImpl {
+public class Join_LoginDAOImpl {
     PreparedStatement pstmt;
     Connection conn;
     ResultSet rs;
-    SignUp_Screen signUp_screen;
-    Main_SignIn_Screen main_signIn_screen;
+    JoinScreen join_screen;
+    LoginScreen main_login_screen;
 
-    public SignUp_InImpl(SignUp_Screen signUp_screen){
-        this.signUp_screen = signUp_screen;
+    public Join_LoginDAOImpl(JoinScreen join_screen){
+        this.join_screen = join_screen;
     }
-    public  SignUp_InImpl(Main_SignIn_Screen main_signIn_screen){
-        this.main_signIn_screen = main_signIn_screen;
+    public Join_LoginDAOImpl(LoginScreen main_login_screen){
+        this.main_login_screen = main_login_screen;
     }
     public boolean joinService(SignUp_InVO vo){
 
@@ -57,8 +56,8 @@ public class SignUp_InImpl {
                 //회원가입 성공
                 JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.",
                         "알림", JOptionPane.INFORMATION_MESSAGE);
-                signUp_screen.dispose();
-                new Main_SignIn_Screen();
+                join_screen.dispose();
+                new LoginScreen();
 
                 return true;
             } else {
@@ -92,7 +91,7 @@ public class SignUp_InImpl {
 
             if (rs.next()) {
 
-                main_signIn_screen.dispose();
+                main_login_screen.dispose();
                 new BoardList();
                 return true;
             } else {
