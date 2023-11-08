@@ -1,6 +1,7 @@
 package model;
 
-import control.SignUp_InVO;
+import control.Join_LoginDAO;
+import control.Join_LoginVO;
 import view.BoardList;
 import view.LoginScreen;
 import view.JoinScreen;
@@ -11,20 +12,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Join_LoginDAOImpl {
+public class Join_LoginDAOImpl implements Join_LoginDAO {
     PreparedStatement pstmt;
     Connection conn;
     ResultSet rs;
     JoinScreen join_screen;
     LoginScreen main_login_screen;
 
+    //impl에서 화면수정을 위한 생성자 오버로드
     public Join_LoginDAOImpl(JoinScreen join_screen){
         this.join_screen = join_screen;
     }
     public Join_LoginDAOImpl(LoginScreen main_login_screen){
         this.main_login_screen = main_login_screen;
     }
-    public boolean joinService(SignUp_InVO vo){
+    @Override
+    public boolean joinService(Join_LoginVO vo){
 
         try{
             conn = DBConnector.getConnection();
@@ -79,7 +82,8 @@ public class Join_LoginDAOImpl {
         }
     }
 
-    public boolean loginService(SignUp_InVO vo) {
+    @Override
+    public boolean loginService(Join_LoginVO vo) {
         try {
             conn = DBConnector.getConnection();
             String sql = "SELECT * FROM users WHERE account = ? AND password = ?";

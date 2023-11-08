@@ -1,6 +1,6 @@
 package view;
 
-import control.SignUp_InVO;
+import control.Join_LoginVO;
 import model.Join_LoginDAOImpl;
 
 import javax.swing.*;
@@ -74,7 +74,7 @@ public class JoinScreen extends JFrame {
                 String enteredPasswordString = new String(enteredPassword);
                 Join_LoginDAOImpl signUpIn = new Join_LoginDAOImpl(JoinScreen.this);
 
-                SignUp_InVO vo = new SignUp_InVO();
+                Join_LoginVO vo = new Join_LoginVO();
                 vo.setNickname(enteredNick);
                 vo.setAccount(enteredAccount);
                 vo.setPassword(enteredPasswordString);

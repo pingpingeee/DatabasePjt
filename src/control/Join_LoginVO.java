@@ -1,6 +1,6 @@
 package control;
 
-public class SignUp_InVO {
+public class Join_LoginVO {
     String nickname;
     String account;
     String password;
