@@ -16,23 +16,25 @@
 
 ## 클래스 & 인터페이스 설명
 ### Package control
-● BoardDAO : 데이터액세스에 필요한 인터페이스
+● BoardDAO : 게시판 필요 기능
 
-● BoarVO : 게시판에 필요한 객체담을 클래스
+● Join_LoginVO : 회원가입 필요 기능
 
-● SignUp_InVO : 유저정보 객체담을 클래스
+● BoarVO : 게시판에 필요한 객체들
+
+● Join_LoginVO : 유저정보 객체들
 ### Package model
-● BoardDAOImpl : 게시판에 필요한 함수들 클래스
+● BoardDAOImpl : 게시판에 필요한 함수들
 
-● Join_LoginDAOImpl : 회원가입 & 로그인에 필요한 함수들 클래스
+● Join_LoginDAOImpl : 회원가입 & 로그인에 필요한 함수들
 ### Package view
-● BoardInsert : 게시글작성클래스
+● BoardInsert : 게시글작성
 
-● BoardList : 게시판 메인 화면클래스
+● BoardList : 게시판 메인 화면
 
-● BoardList2 : 게시판 검색 후 화면클래스
+● BoardList2 : 게시판 검색 후 화면
 
-● BoardUpdate : 게시글 클릭 후 화면클래스
+● BoardUpdate : 게시글 클릭 후 화면
 
 ● Main : 메인클래스
 
