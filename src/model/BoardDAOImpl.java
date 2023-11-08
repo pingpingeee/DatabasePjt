@@ -23,8 +23,7 @@ public class BoardDAOImpl implements BoardDAO {
     //db연동 세팅
     public static final String DRIVER_NAME = "oracle.jdbc.OracleDriver";
     public static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-    public static final String USERID = "c##DatabasePjt";
-    //public static final String USERID = "DatabasePjt";
+    public static final String USERID = "DatabasePjt";
     public static final String USERPWD = "1234";
 
     public BoardDAOImpl() {
