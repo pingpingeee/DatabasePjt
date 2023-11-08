@@ -1,4 +1,6 @@
 # DatabasePjt
+MVC패턴사용
+
 ● 구현기능
   1. 게시판 전체 글
   2. 게시글 특정검색
@@ -43,5 +45,22 @@ CREATE TABLE "DatabasePjt"."BOARD"
 	"REGDATE" DATE
    );
 
+NEED 게시글생성날짜 및 시간
+```
+● NEED 유저정보 USERS(회원가입 추가시)
+```
+num
+nickname(기존 게시판작성자 삭제 후 nickname추가)
+account
+password
+ctype( 0 = 사용자, 1 = 의사)
+regdate(생성날짜)
+```
 
+● NEED 게시판 BOARDCOMMENT댓글
+```
+num(Table BOARD의 num을 참조)
+nickname(Table USERS의 nickname을 참조)
+content(댓글텍스트)
+regdate(댓글작성날짜 및 시간)
 ```
