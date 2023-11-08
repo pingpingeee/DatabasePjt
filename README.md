@@ -3,9 +3,13 @@ IntelJ기준
 1. Settings - Plugins - Database Navigator 설치
 2. 상단 DB Navigator - Database Browser
 3. +버튼 클릭 후 Connect type - Custom
+   
    		URL - 오라클실행환경에 맞게
+   
    		Authentication - DB생성자 정보 입력
+   
    		Drivers - External library 선택 후 폴더 안 ojdbc11.jar 선택
+   
    		
 ● 구현기능
   1. 게시판 전체 글
