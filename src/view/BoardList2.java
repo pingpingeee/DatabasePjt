@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import control.BoardDAO;
 import control.BoardVO;
+import control.SignUp_InVO;
 import model.BoardDAOImpl;
 public class BoardList2 extends JFrame {
     private JTable table;
@@ -36,7 +37,12 @@ public class BoardList2 extends JFrame {
         scrollPane.setBounds(12, 49, 560, 189);
         getContentPane().add(scrollPane);
 
-        BoardDAO dao = new BoardDAOImpl();
+        BoardDAO dao = new BoardDAOImpl() {
+/*            @Override
+            public boolean joinService(SignUp_InVO vo) {
+                return false;
+            }*/
+        };
         List<BoardVO> list = vos;
 
         String[] colNames = new String[] {"글번호", "제목", "내용", "작성자", "작성일"};

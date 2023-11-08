@@ -1,11 +1,12 @@
 package view;
 
+
 public class BoardMain {
 
     public static void main(String[] args) {
 
-        new BoardList();
-        System.out.println("test");
+        //new BoardList();
+        new Main_SignIn_Screen();
     }
 
 }
