@@ -46,16 +46,17 @@ public class SignUp_Screen extends JFrame {
         getContentPane().add(password);
         password.setColumns(10);
 
-        JLabel error = new JLabel("사용할 수 없는 아이디 또는 비밀번호 입니다.");
+/*         JLabel error = new JLabel("사용할 수 없는 아이디 또는 닉네임 입니다.");
         error.setBounds(50, 205, 200, 30);
         error.setForeground(Color.RED);
         error.setHorizontalAlignment(JLabel.CENTER);
-        getContentPane().add(error);
+        getContentPane().add(error);*/
+
+/*        Font fontError = new Font(error.getFont().getName(), Font.PLAIN, 9);
+        error.setFont(fontError);*/
 
         Font fontNick = new Font(lblNewLabelNick.getFont().getName(), Font.PLAIN, 10);
         lblNewLabelNick.setFont(fontNick);
-        Font fontError = new Font(error.getFont().getName(), Font.PLAIN, 9);
-        error.setFont(fontError);
         Font fontAccount = new Font(lblNewLabel.getFont().getName(), Font.PLAIN, 10);
         lblNewLabel.setFont(fontAccount);
         Font fontPassword = new Font(lblNewLabel_1.getFont().getName(), Font.PLAIN, 10);
@@ -71,20 +72,14 @@ public class SignUp_Screen extends JFrame {
                 String enteredAccount = account.getText();
                 char[] enteredPassword = password.getPassword();
                 String enteredPasswordString = new String(enteredPassword);
-                SignUp_InImpl signUpIn = new SignUp_InImpl();
+                SignUp_InImpl signUpIn = new SignUp_InImpl(SignUp_Screen.this);
 
                 SignUp_InVO vo = new SignUp_InVO();
                 vo.setNickname(enteredNick);
                 vo.setAccount(enteredAccount);
                 vo.setPassword(enteredPasswordString);
+                signUpIn.joinService(vo);
 
-                boolean isSuccess = signUpIn.joinService(vo);
-
-                if (isSuccess) {
-                    System.out.println("성공");
-                } else {
-                    System.out.println("실패");
-                }
             }
         });
         getContentPane().add(joinButton);

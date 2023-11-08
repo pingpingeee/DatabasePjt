@@ -37,9 +37,9 @@ public class BoardInsert extends JFrame {
         JTextArea textArea = new JTextArea("");
         textArea.setLineWrap(true);
         textArea.setRows(5);
-        JScrollPane scrollPane = new JScrollPane(textArea); // ScrollPane 추가
-        scrollPane.setBounds(81, 53, 340, 169); // ScrollPane의 위치와 크기 설정
-        getContentPane().add(scrollPane); // Frame에 ScrollPane 추가
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setBounds(81, 53, 340, 169);
+        getContentPane().add(scrollPane);
 
         JLabel lblNewLabel_2 = new JLabel("작성자");
         lblNewLabel_2.setBounds(12, 240, 57, 15);

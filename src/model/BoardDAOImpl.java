@@ -21,27 +21,10 @@ public class BoardDAOImpl implements BoardDAO {
     PreparedStatement pstmt;
     ResultSet rs;
 
-    //db연동 세팅
-    public static final String DRIVER_NAME = "oracle.jdbc.OracleDriver";
-    public static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-    public static final String USERID = "c##DatabasePjt";
-    public static final String USERPWD = "1234";
-
-    public BoardDAOImpl() {
-        try {
-            Class.forName(DRIVER_NAME);
-
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            System.out.println("드라이브 연결 실패");
-        }
-    }
-
     @Override
     public int insert(BoardVO vo) {
         try {
-            conn = DriverManager.getConnection(URL, USERID, USERPWD);
+            conn = DBConnector.getConnection();
             String sql = "insert into board(num, title, content, writer, pw, regdate) values (SEQ_BOARD_NUM.NEXTVAL, ?, ?, ?, ?, SYSDATE )";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, vo.getTitle());
@@ -66,7 +49,7 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public int update(BoardVO vo) {
         try {
-            conn = DriverManager.getConnection(URL, USERID, USERPWD);
+            conn = DBConnector.getConnection();
             String sql = "update board set title=?, content=?, writer=?, regdate=SYSDATE where num=?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, vo.getTitle());
@@ -93,7 +76,7 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public int delete(BoardVO vo) {
         try {
-            conn = DriverManager.getConnection(URL, USERID, USERPWD);
+            conn = DBConnector.getConnection();
             String getPasswordSQL = "select pw from board where num=?";
             pstmt = conn.prepareStatement(getPasswordSQL);
             pstmt.setInt(1, vo.getNum());
@@ -145,7 +128,7 @@ public class BoardDAOImpl implements BoardDAO {
         List<BoardVO> list = new ArrayList<BoardVO>();
 
         try {
-            conn = DriverManager.getConnection(URL, USERID, USERPWD);
+            conn = DBConnector.getConnection();
             String sql = "select num, title, content, writer, regdate from board order by num desc";
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
@@ -192,7 +175,7 @@ public class BoardDAOImpl implements BoardDAO {
         List<BoardVO> list = new ArrayList<BoardVO>();
 
         try {
-            conn = DriverManager.getConnection(URL, USERID, USERPWD);
+            conn = DBConnector.getConnection();
             String sql = "select num, title, content, writer, regdate from board where " + search + " like '%"
                     + searchString + "%' order by num desc";
             pstmt = conn.prepareStatement(sql);

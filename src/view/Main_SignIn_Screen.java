@@ -1,11 +1,15 @@
 package view;
 
+import control.SignUp_InVO;
+import model.SignUp_InImpl;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main_SignIn_Screen extends JFrame {
+    private JTextField nickname;
     private JTextField account;
     private JPasswordField password;
 
@@ -32,14 +36,14 @@ public class Main_SignIn_Screen extends JFrame {
         getContentPane().add(password);
         password.setColumns(10);
 
-        JLabel error = new JLabel("아이디 또는 비밀번호가 올바르지않습니다.");
+/*        JLabel error = new JLabel("아이디 또는 비밀번호가 올바르지않습니다.");
         error.setBounds(50, 185, 200, 30);
         error.setForeground(Color.RED);
         error.setHorizontalAlignment(JLabel.CENTER);
         getContentPane().add(error);
 
         Font fontError = new Font(error.getFont().getName(), Font.PLAIN, 9);
-        error.setFont(fontError);
+        error.setFont(fontError);*/
         Font fontAccount = new Font(lblNewLabel.getFont().getName(), Font.PLAIN, 10);
         lblNewLabel.setFont(fontAccount);
         Font fontPassword = new Font(lblNewLabel_1.getFont().getName(), Font.PLAIN, 10);
@@ -54,8 +58,13 @@ public class Main_SignIn_Screen extends JFrame {
                 String enteredAccount = account.getText();
                 char[] enteredPassword = password.getPassword();
                 String enteredPasswordString = new String(enteredPassword);
+                SignUp_InImpl signUpIn = new SignUp_InImpl(Main_SignIn_Screen.this);
 
-                // 이후 로그인 처리 코드를 추가하세요.
+                SignUp_InVO vo = new SignUp_InVO();
+                vo.setAccount(enteredAccount);
+                vo.setPassword(enteredPasswordString);
+                signUpIn.loginService(vo);
+
             }
         });
         getContentPane().add(loginButton);
@@ -65,8 +74,7 @@ public class Main_SignIn_Screen extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 회원가입 버튼이 눌렸을 때 실행될 코드 작성
-                // 회원가입 화면으로 이동하는 코드를 추가하세요.
+
                 new SignUp_Screen();
                 setVisible(false);
             }
