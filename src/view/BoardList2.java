@@ -39,7 +39,7 @@ public class BoardList2 extends JFrame {
         BoardDAO dao = new BoardDAOImpl();
         List<BoardVO> list = vos;
 
-        String[] colNames = new String[] {"글번호", "제목", "내용...", "작성자", "작성일"};
+        String[] colNames = new String[] {"글번호", "제목", "내용", "작성자", "작성일"};
         Object[][] rowDatas = new Object[list.size()][colNames.length];
 
         for (int i = 0; i < list.size(); i++) {
