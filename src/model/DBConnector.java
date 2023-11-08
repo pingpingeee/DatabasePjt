@@ -32,7 +32,11 @@ import java.util.List;
             if (connections.isEmpty()) {
                 throw new SQLException("커넥션꽉찼다이");
             }
-            return connections.remove(0);
+            //return connections.remove(0);
+            Connection conn = connections.remove(0);
+            System.out.println("커넥션 남은 공간 : " + connections.size());
+            return conn;
+
         }
 
         //디비연결해서 불러오고 나서 반환해야함
@@ -45,18 +49,15 @@ import java.util.List;
                 e.printStackTrace();
             }
         }
-/*    public static Connection getConnection() {
-            try {
-                Class.forName(DRIVER_NAME);
-                conn = DriverManager.getConnection(URL, USERID, USERPWD);
-                System.out.println("Connection 성공");
-            } catch (ClassNotFoundException e) {
-                System.out.println("드라이버없음");
-                e.printStackTrace();
-            } catch (SQLException e) {
-                System.out.println("디비연결실패");
-                e.printStackTrace();
-            }
-        return conn;
-    }*/
+        //사용예제
+        //try {
+        //    Connection conn = DBConnector.getConnection();
+            // 여기서 커넥션을 사용합니다.
+
+            // 작업이 끝나면 반드시 커넥션을 반환해야 합니다.
+        //    DBConnector..releaseConnection(conn);
+        //} catch (SQLException e) {
+        //    e.printStackTrace();
+        //}
+
     }

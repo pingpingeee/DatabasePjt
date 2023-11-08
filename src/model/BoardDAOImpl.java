@@ -31,7 +31,7 @@ public class BoardDAOImpl implements BoardDAO {
             pstmt.setString(4, vo.getPass());
 
             pstmt.executeUpdate();
-
+            DBConnector.releaseConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -56,7 +56,7 @@ public class BoardDAOImpl implements BoardDAO {
             pstmt.setInt(4, vo.getNum());
 
             pstmt.executeUpdate();
-
+            DBConnector.releaseConnection(conn);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -95,7 +95,7 @@ public class BoardDAOImpl implements BoardDAO {
             } else {
                 System.out.println("해당하는 글이 없습니다.");
             }
-
+            DBConnector.releaseConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -142,7 +142,7 @@ public class BoardDAOImpl implements BoardDAO {
                 list.add(vo);
 
             }
-
+            DBConnector.releaseConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -191,7 +191,7 @@ public class BoardDAOImpl implements BoardDAO {
                 list.add(vo);
 
             }
-
+            DBConnector.releaseConnection(conn);
             new BoardList2(list);
 
         } catch (SQLException e) {
@@ -217,9 +217,5 @@ public class BoardDAOImpl implements BoardDAO {
         }
 
 
-    }
-
-    public Connection getConn() {
-        return conn;
     }
 }

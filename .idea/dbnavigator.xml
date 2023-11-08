@@ -48,7 +48,7 @@
           <url value="jdbc:oracle:thin:@localhost:1521:XE" />
           <type value="USER_PASSWORD" />
           <user value="c##DatabasePjt" />
-          <deprecated-pwd value="MTIzNA==" />
+          <deprecated-pwd value="" />
         </database>
         <properties>
           <auto-commit value="false" />
@@ -137,7 +137,7 @@
           <url value="jdbc:oracle:thin:@localhost:1521:XE" />
           <type value="USER_PASSWORD" />
           <user value="c##DatabasePjt" />
-          <deprecated-pwd value="MTIzNA==" />
+          <deprecated-pwd value="" />
         </database>
         <properties>
           <auto-commit value="false" />
