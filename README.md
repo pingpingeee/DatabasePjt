@@ -1,5 +1,5 @@
 # DatabasePjt
-IntelJ기준
+IntelliJ기준
 1. Settings - Plugins - Database Navigator 설치
 2. 상단 DB Navigator - Database Browser
 3. +버튼 클릭 후 Oracle선택
