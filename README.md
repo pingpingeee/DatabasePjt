@@ -31,7 +31,7 @@ IntelliJ기준
 ### Package control
 ● BoardDAO : 게시판 필요 기능
 
-● Join_LoginVO : 회원가입 필요 기능
+● Join_LoginDAO : 회원가입 필요 기능
 
 ● BoarVO : 게시판에 필요한 객체들
 
