@@ -86,22 +86,22 @@ public class BoardList2 extends JFrame {
         scrollPane.setViewportView(table);
 
         JLabel lblNewLabel = new JLabel("검색조건");
-        lblNewLabel.setBounds(186, 20, 56, 15);
+        lblNewLabel.setBounds(170, 20, 56, 15);
         getContentPane().add(lblNewLabel);
 
         JComboBox comboBox = new JComboBox();
         comboBox.setModel(new DefaultComboBoxModel(new String[] {"제목", "내용", "작성자ID"}));
-        comboBox.setBounds(244, 17, 74, 21);
+        comboBox.setBounds(238, 17, 74, 21);
         getContentPane().add(comboBox);
 
         searchString = new JTextField();
-        searchString.setBounds(330, 17, 133, 21);
+        searchString.setBounds(314, 17, 133, 21);
         getContentPane().add(searchString);
         searchString.setColumns(10);
 
         JButton btnSearch = new JButton("검색 및 새로고침");
         //btnSearch.setIcon(new ImageIcon(BoardList2.class.getResource("/images/icon_search_01.png")));
-        btnSearch.setBounds(467, 16, 105, 23);
+        btnSearch.setBounds(450, 16, 130, 23);
         btnSearch.addActionListener(new ActionListener() {
 
             @Override

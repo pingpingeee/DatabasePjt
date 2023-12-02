@@ -2,7 +2,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -10,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -27,6 +25,7 @@ import model.BoardDAOImpl;
 public class BoardList extends JFrame {
     private JTable table;
     private JTextField searchString;
+
     public BoardList() {
         setTitle("진료 상담 게시판");
         //setIconImage(Toolkit.getDefaultToolkit().getImage(BoardList.class.getResource("/images/icon_docs_01.png")));
@@ -52,6 +51,7 @@ public class BoardList extends JFrame {
                     list.get(i).getRegdate()
             };
         }
+
         table = new JTable();
         table.setModel(new DefaultTableModel(rowDatas,colNames) {
             boolean[] columnEditables = new boolean[] {
@@ -73,7 +73,6 @@ public class BoardList extends JFrame {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO Auto-generated method stub
                 int rowNum = table.getSelectedRow();
                 BoardVO vos = new BoardVO();
                 vos = list.get(rowNum);
@@ -84,22 +83,22 @@ public class BoardList extends JFrame {
         scrollPane.setViewportView(table);
 
         JLabel lblNewLabel = new JLabel("검색조건");
-        lblNewLabel.setBounds(186, 20, 56, 15);
+        lblNewLabel.setBounds(170, 20, 56, 15);
         getContentPane().add(lblNewLabel);
 
         JComboBox comboBox = new JComboBox();
         comboBox.setModel(new DefaultComboBoxModel(new String[] {"제목", "내용", "작성자ID"}));
-        comboBox.setBounds(244, 17, 74, 21);
+        comboBox.setBounds(238, 17, 74, 21);
         getContentPane().add(comboBox);
 
         searchString = new JTextField();
-        searchString.setBounds(330, 17, 133, 21);
+        searchString.setBounds(314, 17, 133, 21);
         getContentPane().add(searchString);
         searchString.setColumns(10);
 
-        JButton btnSearch = new JButton("검색");
+        JButton btnSearch = new JButton("검색 및 새로고침");
         //btnSearch.setIcon(new ImageIcon(BoardList.class.getResource("/images/icon_search_01.png")));
-        btnSearch.setBounds(466, 16, 106, 23);
+        btnSearch.setBounds(450, 16, 130, 23);
         btnSearch.addActionListener(new ActionListener() {
 
             @Override

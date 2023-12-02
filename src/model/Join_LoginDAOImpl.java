@@ -2,6 +2,7 @@ package model;
 
 import control.Join_LoginDAO;
 import control.Join_LoginVO;
+import control.User;
 import view.BoardList;
 import view.JoinScreenDoctor;
 import view.LoginScreen;
@@ -16,7 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
 
 public class Join_LoginDAOImpl implements Join_LoginDAO {
     PreparedStatement pstmt;
@@ -27,6 +27,7 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
     JoinScreenDoctor joinScreenDoctor;
     CallableStatement csmt;
     Statement stmt;
+    User userVO = null;
 
     public Join_LoginDAOImpl(JoinScreen join_screen) {
         this.join_screen = join_screen;
@@ -44,7 +45,7 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
     public boolean duplicateCheck(Join_LoginVO vo){
         try{
             conn = DBConnector.getConnection();
-            String sql = "{call check_duplicate_id(?, ?, ?)}"; 
+            String sql = "{call check_duplicate_id(?, ?, ?)}";
             csmt = conn.prepareCall(sql);
             csmt.setString(1, vo.getId());
             csmt.setInt(2, vo.getType()); // 0인경우 일반회원 1인경우 의사회원
@@ -70,7 +71,7 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
                     }
             DBConnector.releaseConnection(conn);
         }catch (SQLException e) {
-            e.printStackTrace();    
+            e.printStackTrace();
         } finally {
         	try {
                 conn.close();
@@ -78,18 +79,18 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        } 
+        }
         return true;
     }
     // 회원가입
     // 일반 회원가입과 의사 회원가입 기능이 따로 있어야 함
     // 일반 회원가입
-    public boolean joinService(Join_LoginVO vo){        
+    public boolean joinService(Join_LoginVO vo){
        try {
     	   conn = DBConnector.getConnection();
     	   java.util.Date utilDate = new java.util.Date();
     	   java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-    	 
+
            String sql = "INSERT INTO 회원 (ID, PW, 이름, 전화번호, 계정생성날짜, 사용자의사구분) VALUES (?, ?, ?, ?, ?, ?)";
            pstmt = conn.prepareStatement(sql);
            pstmt.setString(1, vo.getId());
@@ -98,9 +99,9 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
            pstmt.setString(4, vo.getPhnum());
            pstmt.setDate(5, sqlDate);
            pstmt.setInt(6, vo.getType());
-           
+
            int result = pstmt.executeUpdate();
-           if (result == 1) {              
+           if (result == 1) {
                JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.",
                        "알림", JOptionPane.INFORMATION_MESSAGE);
                join_screen.dispose();
@@ -117,17 +118,17 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
                pstmt.close();
            } catch (SQLException e) {
                e.printStackTrace();
-           }  
+           }
        }
        return true;
    }
  // 의사 회원가입
-    public boolean joinServiceDoctor(Join_LoginVO vo){        
+    public boolean joinServiceDoctor(Join_LoginVO vo){
        try {
     	   conn = DBConnector.getConnection();
     	   java.util.Date utilDate = new java.util.Date();
     	   java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-    	 
+
            String sql = "INSERT INTO 의사 (ID, PW, 이름, 전화번호, 계정생성날짜, 사용자의사구분, 진료과) VALUES (?, ?, ?, ?, ?, ?, ?)";
            pstmt = conn.prepareStatement(sql);
            pstmt.setString(1, vo.getId());
@@ -137,9 +138,9 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
            pstmt.setDate(5, sqlDate);
            pstmt.setInt(6, vo.getType());
            pstmt.setString(7, vo.getSpeciality());
-          
+
            int result = pstmt.executeUpdate();
-           if (result == 1) {              
+           if (result == 1) {
                JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.",
                        "알림", JOptionPane.INFORMATION_MESSAGE);
                joinScreenDoctor.dispose();
@@ -156,7 +157,7 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
                pstmt.close();
            } catch (SQLException e) {
                e.printStackTrace();
-           }  
+           }
        }
        return true;
    }
@@ -164,7 +165,6 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
     public boolean loginService(Join_LoginVO vo) {
         try {
             conn = DBConnector.getConnection();
-            System.out.println("test1");
             // 회원 테이블에서 로그인 시도
             String usersql = "SELECT * FROM 회원 WHERE ID = ? AND PW = ?";
             try (PreparedStatement usersStmt = conn.prepareStatement(usersql)) {
@@ -174,6 +174,10 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
 
                 if (usersRs.next()) {
                 	try {
+                        User.getInfo().setId(usersRs.getString("ID"));
+                        User.getInfo().setPw(usersRs.getString("PW"));
+                        User.getInfo().setName(usersRs.getString("이름"));
+                        User.getInfo().setPhnum(usersRs.getString("전화번호"));
                         JOptionPane.showMessageDialog(null, "로그인에 성공하였습니다.",
                                 "알림", JOptionPane.INFORMATION_MESSAGE);
                         main_login_screen.dispose();
@@ -184,11 +188,9 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
                     }
                 }
             }
-            System.out.println("test2");
             // 의사 테이블에서 로그인 시도
             String doctorsql = "SELECT * FROM 의사 WHERE ID = ? AND PW = ?";
             try (PreparedStatement doctorUsersStmt = conn.prepareStatement(doctorsql)) {
-                System.out.println("test3");
                 doctorUsersStmt.setString(1, vo.getId());
                 doctorUsersStmt.setString(2, vo.getPw());
                 ResultSet doctorUsersRs = doctorUsersStmt.executeQuery();

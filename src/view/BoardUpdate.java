@@ -121,7 +121,17 @@ public class BoardUpdate extends JFrame {
         });
         getContentPane().add(btnClose);
 
-        setVisible(true);
 
+        JButton btnAnswer = new JButton("답변");
+        btnAnswer.setBounds(220, 240, 97, 23);
+        btnAnswer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println("답변 나오게 해주세요.");
+            }
+        });
+        getContentPane().add(btnAnswer);
+        setVisible(true);
     }
 }

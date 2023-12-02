@@ -13,6 +13,7 @@ import java.util.List;
 
 import control.BoardDAO;
 import control.BoardVO;
+import control.User;
 import view.BoardList2;
 
 import javax.swing.*;
@@ -35,11 +36,10 @@ public class BoardDAOImpl implements BoardDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, vo.getTitle());
             pstmt.setString(2, vo.getContent());
-            pstmt.setString(3, vo.getWriterId());
-            pstmt.setString(4, vo.getPw());
+            pstmt.setString(3, User.getInfo().getId());
+            pstmt.setString(4, User.getInfo().getPw());
             pstmt.setDate(5, sqlDate);
 
-            pstmt.executeUpdate();
             int result = pstmt.executeUpdate();
 
             if (result > 0) {
@@ -47,12 +47,12 @@ public class BoardDAOImpl implements BoardDAO {
             } else {
             	JOptionPane.showMessageDialog(null, "게시글 등록에 실패했습니다.", "경고", JOptionPane.WARNING_MESSAGE);
             }
+            DBConnector.releaseConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
                 pstmt.close();
-                DBConnector.releaseConnection(conn);
             } catch (SQLException e) {
                 e.printStackTrace();
             }         
@@ -84,13 +84,13 @@ public class BoardDAOImpl implements BoardDAO {
             }/* else {
             	JOptionPane.showMessageDialog(null, "해당하는 글이 없습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
             }*/
+            DBConnector.releaseConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
                 rs.close();
                 stmt.close();
-                DBConnector.releaseConnection(conn);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -100,10 +100,8 @@ public class BoardDAOImpl implements BoardDAO {
 
     @Override
     public BoardVO search(BoardVO vo) {
-
         return null;
     }
-
 
     // 게시글 조회 V
     @Override
@@ -127,12 +125,12 @@ public class BoardDAOImpl implements BoardDAO {
 
                 list.add(vo);
             }
+            DBConnector.releaseConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
                 rs.close();
-                DBConnector.releaseConnection(conn);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

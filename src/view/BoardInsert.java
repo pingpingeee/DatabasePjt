@@ -41,7 +41,7 @@ public class BoardInsert extends JFrame {
         scrollPane.setBounds(81, 53, 340, 169);
         getContentPane().add(scrollPane);
 
-        JLabel lblNewLabel_2 = new JLabel("작성자");
+/*        JLabel lblNewLabel_2 = new JLabel("작성자");
         lblNewLabel_2.setBounds(12, 240, 57, 15);
         getContentPane().add(lblNewLabel_2);
 
@@ -57,7 +57,7 @@ public class BoardInsert extends JFrame {
         pass = new JTextField("");
         pass.setBounds(81, 267, 116, 21);
         getContentPane().add(pass);
-        pass.setColumns(10);
+        pass.setColumns(10);*/
 
         JButton btnWrite = new JButton("작성완료");
         //btnWrite.setIcon(new ImageIcon(BoardInsert.class.getResource("/images/icon_edit_01.png")));
@@ -68,18 +68,14 @@ public class BoardInsert extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String titles = title.getText();
                 String txtarea = textArea.getText();
-                String name = writer.getText();
-                String pw = pass.getText();
 
-                if(titles.isEmpty() || txtarea.isEmpty() || name.isEmpty() || pw.isEmpty()) {
+                if(titles.isEmpty() || txtarea.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "모든 칸을 입력해주세요.", "경고", JOptionPane.WARNING_MESSAGE);
                 } else {
                     BoardDAO dao = new BoardDAOImpl();
                     BoardVO vo = new BoardVO();
                     vo.setTitle(titles);
                     vo.setContent(txtarea);
-                    vo.setWriterId(name);
-                    vo.setPw(pw);
                     dao.insert(vo);
 
                     //JOptionPane.showMessageDialog(null, "게시글이 작성되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
