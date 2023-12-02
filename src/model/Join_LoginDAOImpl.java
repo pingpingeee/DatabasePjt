@@ -181,6 +181,7 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
                         JOptionPane.showMessageDialog(null, "로그인에 성공하였습니다.",
                                 "알림", JOptionPane.INFORMATION_MESSAGE);
                         main_login_screen.dispose();
+                        DBConnector.releaseConnection(conn);
                         new BoardList();
                         return true;
                     } finally {

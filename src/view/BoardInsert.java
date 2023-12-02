@@ -41,6 +41,7 @@ public class BoardInsert extends JFrame {
         scrollPane.setBounds(81, 53, 340, 169);
         getContentPane().add(scrollPane);
 
+
 /*        JLabel lblNewLabel_2 = new JLabel("작성자");
         lblNewLabel_2.setBounds(12, 240, 57, 15);
         getContentPane().add(lblNewLabel_2);

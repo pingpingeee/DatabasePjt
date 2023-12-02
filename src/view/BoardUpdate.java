@@ -122,16 +122,47 @@ public class BoardUpdate extends JFrame {
         getContentPane().add(btnClose);
 
 
-        JButton btnAnswer = new JButton("답변");
+        JButton btnAnswer = new JButton("답변보기");
         btnAnswer.setBounds(220, 240, 97, 23);
         btnAnswer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                System.out.println("답변 나오게 해주세요.");
+                new AnswerList();
             }
         });
         getContentPane().add(btnAnswer);
+
+
+
+
+        JLabel answer = new JLabel("답변내용");
+        answer.setBounds(12, 330, 57, 15);
+        getContentPane().add(answer);
+
+        JTextArea answerArea = new JTextArea();
+        answerArea.setLineWrap(true);
+        answerArea.setRows(5);
+        JScrollPane scrollPane1 = new JScrollPane(answerArea);
+        scrollPane1.setBounds(81, 327, 340, 169);
+        getContentPane().add(scrollPane1);
+
+
+        JButton btnAnswer1 = new JButton("답변등록");
+        btnAnswer1.setBounds(220, 500, 97, 23);
+        btnAnswer1.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String answerText = answerArea.getText();
+
+            }
+        });
+        getContentPane().add(btnAnswer1);
+
+
+
+
         setVisible(true);
     }
 }
