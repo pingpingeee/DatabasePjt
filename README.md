@@ -1,5 +1,18 @@
 # DatabasePjt
-
+IntelliJ기준
+1. Settings - Plugins - Database Navigator 설치
+2. 상단 DB Navigator - Database Browser
+3. +버튼 클릭 후 Oracle선택
+  
+   		Connect type - Custom
+   
+   		URL - 오라클실행환경에 맞게
+   
+   		Authentication - DB생성자 정보 입력
+   
+   		Drivers - External library 선택 후 폴더 안 ojdbc11.jar 선택
+   
+   		
 ● 구현기능
   1. 게시판 전체 글
   2. 게시글 특정검색
@@ -18,12 +31,14 @@
 ### Package control
 ● BoardDAO : 게시판 필요 기능
 
-● Join_LoginVO : 회원가입 필요 기능
+● Join_LoginDAO : 회원가입 필요 기능
 
 ● BoarVO : 게시판에 필요한 객체들
 
 ● Join_LoginVO : 유저정보 객체들
 ### Package model
+● DBConnector : DB연동(사용예제 숙지해주세요)
+
 ● BoardDAOImpl : 게시판에 필요한 함수들
 
 ● Join_LoginDAOImpl : 회원가입 & 로그인에 필요한 함수들
