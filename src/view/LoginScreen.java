@@ -60,11 +60,15 @@ public class LoginScreen extends JFrame {
                 String enteredPasswordString = new String(enteredPassword);
                 Join_LoginDAOImpl signUpIn = new Join_LoginDAOImpl(LoginScreen.this);
 
-                Join_LoginVO vo = new Join_LoginVO();
-                vo.setAccount(enteredAccount);
-                vo.setPassword(enteredPasswordString);
-                signUpIn.loginService(vo);
-
+                if (enteredAccount.equals("") || enteredPassword.equals("")) {
+                    JOptionPane.showMessageDialog(null, "모든 칸을 입력해주세요.",
+                            "경고", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    Join_LoginVO vo = new Join_LoginVO();
+                    vo.setId(enteredAccount);
+                    vo.setPw(enteredPasswordString);
+                    signUpIn.loginService(vo);
+                }
             }
         });
         getContentPane().add(loginButton);
@@ -80,6 +84,21 @@ public class LoginScreen extends JFrame {
             }
         });
         getContentPane().add(registerButton);
+
+
+        JButton doctorButton = new JButton("의사회원가입");
+        doctorButton.setBounds(100, 260, 110, 23);
+        doctorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                new JoinScreenDoctor();
+                setVisible(false);
+            }
+        });
+        getContentPane().add(doctorButton);
+
+
         setVisible(true);
     }
 }

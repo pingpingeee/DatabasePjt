@@ -3,14 +3,20 @@ package model;
 import control.Join_LoginDAO;
 import control.Join_LoginVO;
 import view.BoardList;
+import view.JoinScreenDoctor;
 import view.LoginScreen;
 import view.JoinScreen;
 
 import javax.swing.*;
+
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.text.SimpleDateFormat;
 
 public class Join_LoginDAOImpl implements Join_LoginDAO {
     PreparedStatement pstmt;
@@ -18,105 +24,200 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
     ResultSet rs;
     JoinScreen join_screen;
     LoginScreen main_login_screen;
+    JoinScreenDoctor joinScreenDoctor;
+    CallableStatement csmt;
+    Statement stmt;
 
-    //impl에서 화면수정을 위한 생성자 오버로드
-    public Join_LoginDAOImpl(JoinScreen join_screen){
+    public Join_LoginDAOImpl(JoinScreen join_screen) {
         this.join_screen = join_screen;
     }
     public Join_LoginDAOImpl(LoginScreen main_login_screen){
         this.main_login_screen = main_login_screen;
     }
+    public Join_LoginDAOImpl(JoinScreenDoctor joinScreenDoctor) {
+        this.joinScreenDoctor = joinScreenDoctor;
+    }
+    // 아이디 중복 체크
+    // 중복체크 프로시저 호출
+    // 회원가입 버튼 클릭 시가 아닌 중복체크 버튼에서 동작
     @Override
-    public boolean joinService(Join_LoginVO vo){
-
+    public boolean duplicateCheck(Join_LoginVO vo){
         try{
             conn = DBConnector.getConnection();
+            String sql = "{call check_duplicate_id(?, ?, ?)}"; 
+            csmt = conn.prepareCall(sql);
+            csmt.setString(1, vo.getId());
+            csmt.setInt(2, vo.getType()); // 0인경우 일반회원 1인경우 의사회원
+            csmt.registerOutParameter(3, Types.NUMERIC);
+            csmt.execute();
+                    int result = csmt.getInt(3);
 
-            String checkDuplicateQuery = "SELECT COUNT(*) FROM users WHERE account = ? OR nickname = ?";
-            pstmt = conn.prepareStatement(checkDuplicateQuery);
-            pstmt.setString(1, vo.getAccount());
-            pstmt.setString(2, vo.getNickname());
-            rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                if (count > 0) {
-                    // 아이디 또는 닉네임이 이미 존재하는 경우
-                    JOptionPane.showMessageDialog(null, "이미 존재하는 아이디 또는 닉네임입니다.",
-                            "알림", JOptionPane.ERROR_MESSAGE);
-                    return false;
-                }
-            }
-
-            String sql = "INSERT INTO users (nickname, account, password) VALUES (?, ?, ?)";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, vo.getNickname());
-            pstmt.setString(2, vo.getAccount());
-            pstmt.setString(3, vo.getPassword());
-
-            int result = pstmt.executeUpdate();
-            if (result == 1) {
-                //회원가입 성공
-                JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.",
-                        "알림", JOptionPane.INFORMATION_MESSAGE);
-                join_screen.dispose();
-                new LoginScreen();
-
-                return true;
-            } else {
-                System.out.println("회원가입실패");
-                return false;
-            }
-        } catch (SQLException e) {
-            System.out.println("Exception확인");
-            e.printStackTrace();
-            return false;
+                switch (result) {
+                        case 0:
+                        	JOptionPane.showMessageDialog(null, "아이디 사용가능.",
+                                  "알림", JOptionPane.INFORMATION_MESSAGE);
+                            join_screen.getJoinButton().setEnabled(true);
+                            joinScreenDoctor.getJoinButton().setEnabled(true);
+                            break;
+                        case 1:
+                        	JOptionPane.showMessageDialog(null, "아이디 중복.",
+                                    "알림", JOptionPane.WARNING_MESSAGE);
+                            joinScreenDoctor.getJoinButton().setEnabled(false);
+                            break;
+                        default:
+                        	JOptionPane.showMessageDialog(null, "오류.",
+                                    "알림", JOptionPane.ERROR_MESSAGE);
+                    }
+            DBConnector.releaseConnection(conn);
+        }catch (SQLException e) {
+            e.printStackTrace();    
         } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                if (conn != null) DBConnector.releaseConnection(conn);
+        	try {
+                conn.close();
+                csmt.close();
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("SignUp_InImpl-finally실패");
             }
-        }
+        } 
+        return true;
     }
-
-    @Override
+    // 회원가입
+    // 일반 회원가입과 의사 회원가입 기능이 따로 있어야 함
+    // 일반 회원가입
+    public boolean joinService(Join_LoginVO vo){        
+       try {
+    	   conn = DBConnector.getConnection();
+    	   java.util.Date utilDate = new java.util.Date();
+    	   java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+    	 
+           String sql = "INSERT INTO 회원 (ID, PW, 이름, 전화번호, 계정생성날짜, 사용자의사구분) VALUES (?, ?, ?, ?, ?, ?)";
+           pstmt = conn.prepareStatement(sql);
+           pstmt.setString(1, vo.getId());
+           pstmt.setString(2, vo.getPw());
+           pstmt.setString(3, vo.getName());
+           pstmt.setString(4, vo.getPhnum());
+           pstmt.setDate(5, sqlDate);
+           pstmt.setInt(6, vo.getType());
+           
+           int result = pstmt.executeUpdate();
+           if (result == 1) {              
+               JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.",
+                       "알림", JOptionPane.INFORMATION_MESSAGE);
+               join_screen.dispose();
+               new LoginScreen();
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+           JOptionPane.showMessageDialog(null, "아이디를 중복확인해주세요.",
+                   "알림", JOptionPane.WARNING_MESSAGE);
+           join_screen.getJoinButton().setEnabled(false);
+       } finally {
+           try {
+               DBConnector.releaseConnection(conn);
+               pstmt.close();
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }  
+       }
+       return true;
+   }
+ // 의사 회원가입
+    public boolean joinServiceDoctor(Join_LoginVO vo){        
+       try {
+    	   conn = DBConnector.getConnection();
+    	   java.util.Date utilDate = new java.util.Date();
+    	   java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+    	 
+           String sql = "INSERT INTO 의사 (ID, PW, 이름, 전화번호, 계정생성날짜, 사용자의사구분, 진료과) VALUES (?, ?, ?, ?, ?, ?, ?)";
+           pstmt = conn.prepareStatement(sql);
+           pstmt.setString(1, vo.getId());
+           pstmt.setString(2, vo.getPw());
+           pstmt.setString(3, vo.getName());
+           pstmt.setString(4, vo.getPhnum());
+           pstmt.setDate(5, sqlDate);
+           pstmt.setInt(6, vo.getType());
+           pstmt.setString(7, vo.getSpeciality());
+          
+           int result = pstmt.executeUpdate();
+           if (result == 1) {              
+               JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.",
+                       "알림", JOptionPane.INFORMATION_MESSAGE);
+               joinScreenDoctor.dispose();
+               new LoginScreen();
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+           JOptionPane.showMessageDialog(null, "회원가입에 실패하였습니다.",
+                   "알림", JOptionPane.WARNING_MESSAGE);
+           joinScreenDoctor.getJoinButton().setEnabled(false);
+       } finally {
+           try {
+               DBConnector.releaseConnection(conn);
+               pstmt.close();
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }  
+       }
+       return true;
+   }
+    // 로그인
     public boolean loginService(Join_LoginVO vo) {
         try {
             conn = DBConnector.getConnection();
-            String sql = "SELECT * FROM users WHERE account = ? AND password = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, vo.getAccount());
-            pstmt.setString(2, vo.getPassword());
+            System.out.println("test1");
+            // 회원 테이블에서 로그인 시도
+            String usersql = "SELECT * FROM 회원 WHERE ID = ? AND PW = ?";
+            try (PreparedStatement usersStmt = conn.prepareStatement(usersql)) {
+                usersStmt.setString(1, vo.getId());
+                usersStmt.setString(2, vo.getPw());
+                ResultSet usersRs = usersStmt.executeQuery();
 
-            rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-
-                main_login_screen.dispose();
-                new BoardList();
-                return true;
-            } else {
-                JOptionPane.showMessageDialog(null, "잘못된 아이디 또는 비밀번호입니다.",
-                        "알림", JOptionPane.ERROR_MESSAGE);
-                return false;
+                if (usersRs.next()) {
+                	try {
+                        JOptionPane.showMessageDialog(null, "로그인에 성공하였습니다.",
+                                "알림", JOptionPane.INFORMATION_MESSAGE);
+                        main_login_screen.dispose();
+                        new BoardList();
+                        return true;
+                    } finally {
+                        conn.close(); // 성공 시에도 리소스를 닫아주도록 변경
+                    }
+                }
             }
+            System.out.println("test2");
+            // 의사 테이블에서 로그인 시도
+            String doctorsql = "SELECT * FROM 의사 WHERE ID = ? AND PW = ?";
+            try (PreparedStatement doctorUsersStmt = conn.prepareStatement(doctorsql)) {
+                System.out.println("test3");
+                doctorUsersStmt.setString(1, vo.getId());
+                doctorUsersStmt.setString(2, vo.getPw());
+                ResultSet doctorUsersRs = doctorUsersStmt.executeQuery();
+
+                if (doctorUsersRs.next()) {
+                	try {
+                        JOptionPane.showMessageDialog(null, "로그인에 성공하였습니다.",
+                                "알림", JOptionPane.INFORMATION_MESSAGE);
+                        main_login_screen.dispose();
+                        new BoardList();
+                        return true;
+                    } finally {
+                        conn.close(); // 성공 시에도 리소스를 닫아주도록 변경
+                    }
+                }
+            }
+            // 로그인 실패
+            JOptionPane.showMessageDialog(null, "잘못된 아이디 또는 비밀번호입니다.", "알림", JOptionPane.WARNING_MESSAGE);
+            DBConnector.releaseConnection(conn);
         } catch (SQLException e) {
-            System.out.println("Exception 확인");
             e.printStackTrace();
-            return false;
         } finally {
             try {
-                if (pstmt != null) pstmt.close();
-                if (conn != null) DBConnector.releaseConnection(conn);
+                DBConnector.releaseConnection(conn);
+                conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+        return false;
     }
-
-
-
 }

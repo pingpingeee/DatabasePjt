@@ -32,7 +32,7 @@ import java.util.List;
             if (connections.isEmpty()) {
                 throw new SQLException("커넥션꽉찼다이");
             }
-            //return connections.remove(0);
+
             Connection conn = connections.remove(0);
             System.out.println("커넥션 남은 공간 : " + connections.size());
             return conn;
@@ -50,14 +50,14 @@ import java.util.List;
             }
         }
         //사용예제
-        //try {
-        //    Connection conn = DBConnector.getConnection();
-            // 여기서 커넥션을 사용합니다.
-
-            // 작업이 끝나면 반드시 커넥션을 반환해야 합니다.
-        //    DBConnector..releaseConnection(conn);
-        //} catch (SQLException e) {
-        //    e.printStackTrace();
-        //}
+//        try {
+//            Connection conn = DBConnector.getConnection();
+//            // 여기서 커넥션을 사용합니다.
+//
+//            // 작업이 끝나면 반드시 커넥션을 반환해야 합니다.
+//            DBConnector..releaseConnection(conn);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
     }

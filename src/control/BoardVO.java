@@ -7,19 +7,10 @@ public class BoardVO {
     int num;
     String title;
     String content;
-    String name;
-    String pass;
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    Date regDate;
-
+    String writerId;
+    String pw;
+    Date regdate;
+  
     public int getNum() {
         return num;
     }
@@ -36,28 +27,35 @@ public class BoardVO {
         this.title = title;
     }
 
-    public String getContent() {
+    public String getPw() {
+		return pw;
+	}
+
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+
+	public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
 
-    public String getName() {
-        return name;
+    public String getWriterId() {
+        return writerId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWriterId(String writerId) {
+        this.writerId = writerId;
     }
 
-    public Date getRegDate() {
-        return regDate;
+    public Date getRegdate() {
+        return regdate;
     }
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
+    public void setRegdate(Date regdate) {
+        this.regdate = regdate;
     }
 
 }

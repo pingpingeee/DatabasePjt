@@ -78,11 +78,11 @@ public class BoardInsert extends JFrame {
                     BoardVO vo = new BoardVO();
                     vo.setTitle(titles);
                     vo.setContent(txtarea);
-                    vo.setName(name);
-                    vo.setPass(pw);
+                    vo.setWriterId(name);
+                    vo.setPw(pw);
                     dao.insert(vo);
 
-                    JOptionPane.showMessageDialog(null, "게시글이 작성되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "게시글이 작성되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
                     setVisible(false);
                 }
             }

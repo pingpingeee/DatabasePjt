@@ -48,8 +48,8 @@ public class BoardList extends JFrame {
                     list.get(i).getNum(),
                     list.get(i).getTitle(),
                     list.get(i).getContent(),
-                    list.get(i).getName(),
-                    list.get(i).getRegDate()
+                    list.get(i).getWriterId(),
+                    list.get(i).getRegdate()
             };
         }
         table = new JTable();
@@ -88,7 +88,7 @@ public class BoardList extends JFrame {
         getContentPane().add(lblNewLabel);
 
         JComboBox comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[] {"title", "content", "writer"}));
+        comboBox.setModel(new DefaultComboBoxModel(new String[] {"제목", "내용", "작성자ID"}));
         comboBox.setBounds(244, 17, 74, 21);
         getContentPane().add(comboBox);
 

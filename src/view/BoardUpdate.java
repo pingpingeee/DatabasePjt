@@ -50,7 +50,7 @@ public class BoardUpdate extends JFrame {
         lblNewLabel_2.setBounds(12, 240, 57, 15);
         getContentPane().add(lblNewLabel_2);
 
-        writer = new JTextField(vo.getName());
+        writer = new JTextField(vo.getWriterId());
         writer.setBounds(81, 237, 116, 21);
         getContentPane().add(writer);
         writer.setColumns(10);
@@ -94,7 +94,7 @@ public class BoardUpdate extends JFrame {
                     BoardVO vo = new BoardVO();
 
                     vo.setNum(num);
-                    vo.setPass(password);
+                    vo.setPw(password);
 
                     dao.delete(vo);
 
