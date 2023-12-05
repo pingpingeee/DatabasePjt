@@ -13,7 +13,7 @@ import java.util.List;
 
 import control.BoardDAO;
 import control.BoardVO;
-import control.User;
+import control.UserManager;
 import view.BoardList2;
 
 import javax.swing.*;
@@ -36,8 +36,8 @@ public class BoardDAOImpl implements BoardDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, vo.getTitle());
             pstmt.setString(2, vo.getContent());
-            pstmt.setString(3, User.getInfo().getId());
-            pstmt.setString(4, User.getInfo().getPw());
+            pstmt.setString(3, UserManager.getInfo().getId());
+            pstmt.setString(4, UserManager.getInfo().getPw());
             pstmt.setDate(5, sqlDate);
 
             int result = pstmt.executeUpdate();

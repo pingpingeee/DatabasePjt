@@ -25,6 +25,7 @@ import model.BoardDAOImpl;
 public class BoardList extends JFrame {
     private JTable table;
     private JTextField searchString;
+    public static int num;
 
     public BoardList() {
         setTitle("진료 상담 게시판");
@@ -76,7 +77,7 @@ public class BoardList extends JFrame {
                 int rowNum = table.getSelectedRow();
                 BoardVO vos = new BoardVO();
                 vos = list.get(rowNum);
-
+                num = vos.getNum();
                 if (hasPermission(vos)) {
                     new BoardUpdate(vos);
                 }
@@ -113,10 +114,10 @@ public class BoardList extends JFrame {
             }
         });
         getContentPane().add(btnSearch);
-        JLabel lblDesignByDanielkim = new JLabel("GUI Test");
-        lblDesignByDanielkim.setForeground(Color.GRAY);
-        lblDesignByDanielkim.setBounds(434, 286, 138, 15);
-        getContentPane().add(lblDesignByDanielkim);
+        JLabel label = new JLabel("GUI Test");
+        label.setForeground(Color.GRAY);
+        label.setBounds(434, 286, 138, 15);
+        getContentPane().add(label);
 
         JButton btnWrite = new JButton("글작성");
         //btnWrite.setIcon(new ImageIcon(BoardList.class.getResource("/images/icon_edit_01.png")));

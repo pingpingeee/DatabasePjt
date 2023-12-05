@@ -2,8 +2,8 @@ package control;
 
 import java.util.Date;
 
-public class User {
-    private static User user;
+public class UserManager {
+    private static UserManager user;
     String id;          // ID
     String pw;          // PW
     String name;        // 이름
@@ -11,14 +11,14 @@ public class User {
     Date regDate;       // 계정생성날짜
     int type;           // 사용자의사구분
 
-    public static User getInfo() {
+    public static UserManager getInfo() {
         if (user == null) {
-            user = new User();
+            user = new UserManager();
         }
         return user;
     }
 
-    private User() {
+    private UserManager() {
 
     }
 

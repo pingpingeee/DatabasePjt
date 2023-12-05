@@ -2,7 +2,7 @@ package model;
 
 import control.Join_LoginDAO;
 import control.Join_LoginVO;
-import control.User;
+import control.UserManager;
 import view.BoardList;
 import view.JoinScreenDoctor;
 import view.LoginScreen;
@@ -27,7 +27,7 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
     JoinScreenDoctor joinScreenDoctor;
     CallableStatement csmt;
     Statement stmt;
-    User userVO = null;
+    UserManager userVO = null;
 
     public Join_LoginDAOImpl(JoinScreen join_screen) {
         this.join_screen = join_screen;
@@ -58,11 +58,13 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
                             "알림", JOptionPane.INFORMATION_MESSAGE);
                     join_screen.getJoinButton().setEnabled(true);
                     joinScreenDoctor.getJoinButton().setEnabled(true);
+                    DBConnector.releaseConnection(conn);
                     break;
                 case 1:
                     JOptionPane.showMessageDialog(null, "아이디 중복.",
                             "알림", JOptionPane.WARNING_MESSAGE);
                     joinScreenDoctor.getJoinButton().setEnabled(false);
+                    DBConnector.releaseConnection(conn);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "오류.",
@@ -173,10 +175,10 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
 
                 if (usersRs.next()) {
                 	try {
-                        User.getInfo().setId(usersRs.getString("ID"));
-                        User.getInfo().setPw(usersRs.getString("PW"));
-                        User.getInfo().setName(usersRs.getString("이름"));
-                        User.getInfo().setPhnum(usersRs.getString("전화번호"));
+                        UserManager.getInfo().setId(usersRs.getString("ID"));
+                        UserManager.getInfo().setPw(usersRs.getString("PW"));
+                        UserManager.getInfo().setName(usersRs.getString("이름"));
+                        UserManager.getInfo().setPhnum(usersRs.getString("전화번호"));
                         JOptionPane.showMessageDialog(null, "로그인에 성공하였습니다.",
                                 "알림", JOptionPane.INFORMATION_MESSAGE);
                         main_login_screen.dispose();
