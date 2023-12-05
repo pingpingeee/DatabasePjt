@@ -199,6 +199,10 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
 
                 if (doctorUsersRs.next()) {
                 	try {
+                        UserManager.getInfo().setId(doctorUsersRs.getString("ID"));
+                        UserManager.getInfo().setPw(doctorUsersRs.getString("PW"));
+                        UserManager.getInfo().setName(doctorUsersRs.getString("이름"));
+                        UserManager.getInfo().setPhnum(doctorUsersRs.getString("전화번호"));
                         JOptionPane.showMessageDialog(null, "로그인에 성공하였습니다.",
                                 "알림", JOptionPane.INFORMATION_MESSAGE);
                         main_login_screen.dispose();

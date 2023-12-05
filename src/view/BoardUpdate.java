@@ -141,18 +141,27 @@ public class BoardUpdate extends JFrame {
         });
         getContentPane().add(btnAnswer);
 
+        AnswerVO voD = new AnswerVO();
 
+        JLabel answerTitle = new JLabel("답변제목");
+        answerTitle.setBounds(12, 330, 57, 15);
+        getContentPane().add(answerTitle);
 
+        JTextField writerDoctor = new JTextField(voD.getDocterId());
+        writerDoctor.setBounds(81, 327, 340, 21);
+        writerDoctor.setBackground(Color.white);
+        getContentPane().add(writerDoctor);
+        writerDoctor.setColumns(10);
 
         JLabel answer = new JLabel("답변내용");
-        answer.setBounds(12, 330, 57, 15);
+        answer.setBounds(12, 370, 57, 15);
         getContentPane().add(answer);
 
         JTextArea answerArea = new JTextArea();
         answerArea.setLineWrap(true);
         answerArea.setRows(5);
         JScrollPane scrollPane1 = new JScrollPane(answerArea);
-        scrollPane1.setBounds(81, 327, 340, 169);
+        scrollPane1.setBounds(81, 367, 340, 119);
         getContentPane().add(scrollPane1);
 
 
@@ -162,9 +171,11 @@ public class BoardUpdate extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                String answerTitle = writerDoctor.getText();
                 String answerText = answerArea.getText();
                 AnswerDAO dao = new AnswerDAOImpl();
                 AnswerVO vo = new AnswerVO();
+                vo.setTitle(answerTitle);
                 vo.setContent(answerText);
                 dao.insert(vo);
             }

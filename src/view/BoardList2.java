@@ -80,6 +80,7 @@ public class BoardList2 extends JFrame {
                 BoardVO vos = new BoardVO();
                 vos = list.get(rowNum);
 
+
                 if (hasPermission(vos)) {
                     new BoardUpdate(vos);
                 }
