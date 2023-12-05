@@ -37,7 +37,7 @@ public class JoinScreenDoctor extends JFrame {
         getContentPane().add(lblNewLabel_2);
 
         JLabel lblNewLabel_3= new JLabel("진료과");
-        lblNewLabel_3.setBounds(50, 210, 57, 15);
+        lblNewLabel_3.setBounds(50, 220, 57, 15);
         getContentPane().add(lblNewLabel_3);
 
         nickname = new JTextField();

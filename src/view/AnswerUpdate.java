@@ -16,7 +16,7 @@ public class AnswerUpdate extends JFrame {
     public AnswerUpdate(AnswerVO vo){
         final int num = vo.getAnsNum();
 
-        setBounds(new Rectangle(600, 0, 450, 600));
+        setBounds(new Rectangle(600, 0, 450, 400));
         setTitle("답변");
 
         getContentPane().setLayout(null);

@@ -87,7 +87,7 @@ public class LoginScreen extends JFrame {
 
 
         JButton doctorButton = new JButton("의사회원가입");
-        doctorButton.setBounds(100, 260, 110, 23);
+        doctorButton.setBounds(90, 260, 110, 23);
         doctorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
