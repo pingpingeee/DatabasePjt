@@ -77,7 +77,9 @@ public class BoardList extends JFrame {
                 BoardVO vos = new BoardVO();
                 vos = list.get(rowNum);
 
-                new BoardUpdate(vos);
+                if (hasPermission(vos)) {
+                    new BoardUpdate(vos);
+                }
             }
         });
         scrollPane.setViewportView(table);
@@ -131,5 +133,9 @@ public class BoardList extends JFrame {
         getContentPane().add(btnWrite);
 
         setVisible(true);
+    }
+    private boolean hasPermission(BoardVO vos) {
+
+        return true;
     }
 }

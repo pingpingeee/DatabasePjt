@@ -1,7 +1,6 @@
 package view;
 
-import java.awt.Rectangle;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,6 +30,8 @@ public class BoardUpdate extends JFrame {
 
         title = new JTextField(vo.getTitle());
         title.setBounds(81, 22, 340, 21);
+        title.setBackground(Color.white);
+        title.setEditable(false);
         getContentPane().add(title);
         title.setColumns(10);
 
@@ -43,6 +44,8 @@ public class BoardUpdate extends JFrame {
         textArea.setRows(5);
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBounds(81, 53, 340, 169);
+        textArea.setBackground(Color.white);
+        textArea.setEditable(false);
         getContentPane().add(scrollPane);
 
 
@@ -52,6 +55,8 @@ public class BoardUpdate extends JFrame {
 
         writer = new JTextField(vo.getWriterId());
         writer.setBounds(81, 237, 116, 21);
+        writer.setBackground(Color.white);
+        writer.setEditable(false);
         getContentPane().add(writer);
         writer.setColumns(10);
 
