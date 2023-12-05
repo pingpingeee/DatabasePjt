@@ -6,10 +6,19 @@ public class AnswerVO {
 	int ansNum;
 	int writeNum;
 	String docterId;
+	String doctorPw;
+
+
 	String title;
 	String content;
 	Date regDate;
-	
+	public String getDoctorPw() {
+		return doctorPw;
+	}
+
+	public void setDoctorPw(String doctorPw) {
+		this.doctorPw = doctorPw;
+	}
 	public Date getRegDate() {
 		return regDate;
 	}

@@ -1,8 +1,10 @@
 package view;
 
+import control.AnswerDAO;
 import control.AnswerVO;
 import control.BoardDAO;
 import control.BoardVO;
+import model.AnswerDAOImpl;
 import model.BoardDAOImpl;
 
 import javax.swing.*;
@@ -59,7 +61,7 @@ public class AnswerUpdate extends JFrame {
         writer.setColumns(10);
 
 
-        JButton btnDel = new JButton("글삭제");
+        JButton btnDel = new JButton("답변삭제");
         btnDel.setBounds(110, 280, 97, 23);
         btnDel.addActionListener(new ActionListener() {
 
@@ -67,12 +69,12 @@ public class AnswerUpdate extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String password = JOptionPane.showInputDialog(null, "비밀번호를 입력하세요:");
 
-                if (password != null && !password.isEmpty()) {
-                    BoardDAO dao = new BoardDAOImpl();
-                    BoardVO vo = new BoardVO();
+                if (password != null) {
+                    AnswerDAO dao = new AnswerDAOImpl();
+                    AnswerVO vo = new AnswerVO();
 
-                    vo.setNum(num);
-                    vo.setPw(password);
+                    vo.setAnsNum(num);
+                    vo.setDoctorPw(password);
 
                     dao.delete(vo);
 

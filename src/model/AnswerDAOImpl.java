@@ -27,8 +27,9 @@ public class AnswerDAOImpl implements AnswerDAO {
 
 	//// 답변 추가
 	// 답변 추가할때 의사만 답변을 달 수 있다.(트리거)
+	@Override
 	public int insert(AnswerVO vo) {
-		String sql = "INSERT INTO 답변 (답변번호, 게시글번호, 의사이름, 제목, 내용, 답변일자) VALUES (SEQ_ANSWER_NUM.NEXTVAL, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO 답변 (답변번호, 게시글번호, 의사이름, 비밀번호, 제목, 내용, 답변일자) VALUES (SEQ_ANSWER_NUM.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			conn = DBConnector.getConnection();
@@ -38,9 +39,10 @@ public class AnswerDAOImpl implements AnswerDAO {
 
 			pstmt.setInt(1, BoardList.num);
 			pstmt.setString(2, UserManager.getInfo().getId());
-			pstmt.setString(3, vo.getTitle());
-			pstmt.setString(4, vo.getContent());
-			pstmt.setDate(5, sqlDate);
+			pstmt.setString(3,UserManager.getInfo().getPw());
+			pstmt.setString(4, vo.getTitle());
+			pstmt.setString(5, vo.getContent());
+			pstmt.setDate(6, sqlDate);
 
 			pstmt.executeUpdate();
 
@@ -48,11 +50,13 @@ public class AnswerDAOImpl implements AnswerDAO {
 					"알림", JOptionPane.INFORMATION_MESSAGE);
 			DBConnector.releaseConnection(conn);
 		} catch (SQLException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "의사만 답변을 작성할 수 있습니다.",
 					"경고", JOptionPane.ERROR_MESSAGE);
+
 		} finally {
 			try {
+				DBConnector.releaseConnection(conn);
 				conn.close();
 				pstmt.close();
 			} catch (SQLException e) {
@@ -62,34 +66,38 @@ public class AnswerDAOImpl implements AnswerDAO {
 		return 0;
 	}
 
+
 	// 답변 삭제
+	@Override
 	public int delete(AnswerVO vo) {
 		try {
 			conn = DBConnector.getConnection();
-			String sql = "DELETE FROM 답변 WHERE 답변번호 = " + vo.getAnsNum();
-			stmt = conn.createStatement();
+			String sql = "DELETE FROM 답변 WHERE 답변번호 = ? AND 비밀번호 = ?";
+			try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				pstmt.setInt(1, vo.getAnsNum());
+				pstmt.setString(2, vo.getDoctorPw());
 
-			int rs = stmt.executeUpdate(sql);
+				int rowsAffected = pstmt.executeUpdate();
 
-			if (rs > 0) {
-				JOptionPane.showMessageDialog(null, "답변이 삭제되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(null, "해당하는 답변이 없습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+				if (rowsAffected > 0) {
+						JOptionPane.showMessageDialog(null, "답변이 삭제되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+					}
+				return rowsAffected;
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBConnector.releaseConnection(conn);
 			try {
 				conn.close();
-				csmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		return 0;
 	}
-
 	//답변 조회
 	public List<AnswerVO> selectAnswers() {
 		List<AnswerVO> answerList = new ArrayList<AnswerVO>();
