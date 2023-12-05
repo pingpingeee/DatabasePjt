@@ -20,7 +20,7 @@ public class AnswerList extends JFrame {
     private JTable table;
     public AnswerList() {
         setTitle("답변");
-        setBounds(0, 0, 550, 400);
+        setBounds(1050, 0, 550, 400);
         getContentPane().setLayout(null);
 
 
@@ -38,7 +38,7 @@ public class AnswerList extends JFrame {
             rowDatas[i] = new Object[]{
                     list.get(i).getAnsNum(),
                     list.get(i).getTitle(),
-                    list.get(i).getDoctorId(),
+                    list.get(i).getDoctorName(),
                     list.get(i).getRegDate()
             };
         }

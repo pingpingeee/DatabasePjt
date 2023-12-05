@@ -145,7 +145,7 @@ public class AnswerDAOImpl implements AnswerDAO {
 			conn = DBConnector.getConnection();
 			String sql = "select 이름, 전화번호, 진료과 from 의사 where ID = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, answerVO.getDoctorId());
+			pstmt.setString(1, doctorId);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {

@@ -46,11 +46,11 @@ public class AnswerUpdate extends JFrame {
         getContentPane().add(scrollPane);
 
 
-        JLabel lblNewLabel_2 = new JLabel("작성자");
+        JLabel lblNewLabel_2 = new JLabel("의사이름");
         lblNewLabel_2.setBounds(12, 240, 57, 15);
         getContentPane().add(lblNewLabel_2);
 
-        writer = new JTextField(vo.getDoctorId());
+        writer = new JTextField(vo.getDoctorName());
         writer.setBounds(81, 237, 116, 21);
         writer.setBackground(Color.white);
         writer.setEditable(false);
@@ -66,7 +66,6 @@ public class AnswerUpdate extends JFrame {
 
 
                 dao.profile(vo.getDoctorId());
-                System.out.println(vo.getDoctorId());
 
             }
         });
