@@ -45,35 +45,34 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
     public boolean duplicateCheck(Join_LoginVO vo){
         try{
             conn = DBConnector.getConnection();
-            String sql = "{call check_duplicate_id(?, ?, ?)}";
+            String sql = "{call check_duplicate_id(?, ?)}";
             csmt = conn.prepareCall(sql);
             csmt.setString(1, vo.getId());
-            csmt.setInt(2, vo.getType()); // 0인경우 일반회원 1인경우 의사회원
-            csmt.registerOutParameter(3, Types.NUMERIC);
+            csmt.registerOutParameter(2, Types.NUMERIC);
             csmt.execute();
-                    int result = csmt.getInt(3);
+            int result = csmt.getInt(2);
 
-                switch (result) {
-                        case 0:
-                        	JOptionPane.showMessageDialog(null, "아이디 사용가능.",
-                                  "알림", JOptionPane.INFORMATION_MESSAGE);
-                            join_screen.getJoinButton().setEnabled(true);
-                            joinScreenDoctor.getJoinButton().setEnabled(true);
-                            break;
-                        case 1:
-                        	JOptionPane.showMessageDialog(null, "아이디 중복.",
-                                    "알림", JOptionPane.WARNING_MESSAGE);
-                            joinScreenDoctor.getJoinButton().setEnabled(false);
-                            break;
-                        default:
-                        	JOptionPane.showMessageDialog(null, "오류.",
-                                    "알림", JOptionPane.ERROR_MESSAGE);
-                    }
+            switch (result) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "아이디 사용가능.",
+                            "알림", JOptionPane.INFORMATION_MESSAGE);
+                    join_screen.getJoinButton().setEnabled(true);
+                    joinScreenDoctor.getJoinButton().setEnabled(true);
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(null, "아이디 중복.",
+                            "알림", JOptionPane.WARNING_MESSAGE);
+                    joinScreenDoctor.getJoinButton().setEnabled(false);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "오류.",
+                            "알림", JOptionPane.ERROR_MESSAGE);
+            }
             DBConnector.releaseConnection(conn);
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	try {
+            try {
                 conn.close();
                 csmt.close();
             } catch (SQLException e) {
