@@ -38,7 +38,7 @@ public class AnswerList extends JFrame {
             rowDatas[i] = new Object[]{
                     list.get(i).getAnsNum(),
                     list.get(i).getTitle(),
-                    list.get(i).getDocterId(),
+                    list.get(i).getDoctorId(),
                     list.get(i).getRegDate()
             };
         }

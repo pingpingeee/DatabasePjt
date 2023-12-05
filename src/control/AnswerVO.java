@@ -5,13 +5,39 @@ import java.util.Date;
 public class AnswerVO {
 	int ansNum;
 	int writeNum;
-	String docterId;
+	String doctorName;
+	String doctorId;
 	String doctorPw;
-
-
+	String doctorTel;
+	String doctorDesc;
 	String title;
 	String content;
 	Date regDate;
+
+	public String getDoctorTel() {
+		return doctorTel;
+	}
+
+	public void setDoctorTel(String doctorTel) {
+		this.doctorTel = doctorTel;
+	}
+
+	public String getDoctorDesc() {
+		return doctorDesc;
+	}
+
+	public void setDoctorDesc(String doctorDesc) {
+		this.doctorDesc = doctorDesc;
+	}
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
 	public String getDoctorPw() {
 		return doctorPw;
 	}
@@ -37,11 +63,11 @@ public class AnswerVO {
 	public void setWriteNum(int writeNum) {
 		this.writeNum = writeNum;
 	}
-	public String getDocterId() {
-		return docterId;
+	public String getDoctorId() {
+		return doctorId;
 	}
-	public void setDocterId(String docterId) {
-		this.docterId = docterId;
+	public void setDoctorId(String docterId) {
+		this.doctorId = docterId;
 	}
 	public String getTitle() {
 		return title;

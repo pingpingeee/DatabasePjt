@@ -17,6 +17,7 @@ import control.AnswerDAO;
 import control.AnswerVO;
 import control.UserManager;
 import view.BoardList;
+import view.DoctorProfile;
 
 public class AnswerDAOImpl implements AnswerDAO {
 	Connection conn;
@@ -29,7 +30,7 @@ public class AnswerDAOImpl implements AnswerDAO {
 	// 답변 추가할때 의사만 답변을 달 수 있다.(트리거)
 	@Override
 	public int insert(AnswerVO vo) {
-		String sql = "INSERT INTO 답변 (답변번호, 게시글번호, 의사이름, 비밀번호, 제목, 내용, 답변일자) VALUES (SEQ_ANSWER_NUM.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO 답변 (답변번호, 게시글번호, 의사ID, 의사이름, 비밀번호, 제목, 내용, 답변일자) VALUES (SEQ_ANSWER_NUM.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			conn = DBConnector.getConnection();
@@ -39,10 +40,11 @@ public class AnswerDAOImpl implements AnswerDAO {
 
 			pstmt.setInt(1, BoardList.num);
 			pstmt.setString(2, UserManager.getInfo().getId());
-			pstmt.setString(3,UserManager.getInfo().getPw());
-			pstmt.setString(4, vo.getTitle());
-			pstmt.setString(5, vo.getContent());
-			pstmt.setDate(6, sqlDate);
+			pstmt.setString(3, UserManager.getInfo().getName());
+			pstmt.setString(4, UserManager.getInfo().getPw());
+			pstmt.setString(5, vo.getTitle());
+			pstmt.setString(6, vo.getContent());
+			pstmt.setDate(7, sqlDate);
 
 			pstmt.executeUpdate();
 
@@ -99,11 +101,12 @@ public class AnswerDAOImpl implements AnswerDAO {
 		return 0;
 	}
 	//답변 조회
+	@Override
 	public List<AnswerVO> selectAnswers() {
 		List<AnswerVO> answerList = new ArrayList<AnswerVO>();
 		try {
 			conn = DBConnector.getConnection();
-			String sql = "SELECT 답변번호, 게시글번호, 의사이름, 제목, 내용, 답변일자 FROM 답변 WHERE 게시글번호 = ?";
+			String sql = "SELECT 답변번호, 게시글번호, 의사ID, 의사이름, 제목, 내용, 답변일자 FROM 답변 WHERE 게시글번호 = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, BoardList.num);
 
@@ -113,7 +116,8 @@ public class AnswerDAOImpl implements AnswerDAO {
 				AnswerVO answerVO = new AnswerVO();
 				answerVO.setAnsNum(rs.getInt("답변번호"));
 				answerVO.setWriteNum(rs.getInt("게시글번호"));
-				answerVO.setDocterId(rs.getString("의사이름"));
+				answerVO.setDoctorId(rs.getString("의사ID"));
+				answerVO.setDoctorName(rs.getString("의사이름"));
 				answerVO.setTitle(rs.getString("제목"));
 				answerVO.setContent(rs.getString("내용"));
 				answerVO.setRegDate(rs.getDate("답변일자"));
@@ -133,5 +137,29 @@ public class AnswerDAOImpl implements AnswerDAO {
 			}
 		}
 		return answerList;
+	}
+
+	public void profile(String doctorId) {
+		AnswerVO answerVO = new AnswerVO();
+		try {
+			conn = DBConnector.getConnection();
+			String sql = "select 이름, 전화번호, 진료과 from 의사 where ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, answerVO.getDoctorId());
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				answerVO.setDoctorName(rs.getString("이름"));
+				answerVO.setDoctorTel(rs.getString("전화번호"));
+				answerVO.setDoctorDesc(rs.getString("진료과"));
+			}
+			rs.close();
+			pstmt.close();
+			new DoctorProfile(answerVO);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBConnector.releaseConnection(conn);
+		}
 	}
 }

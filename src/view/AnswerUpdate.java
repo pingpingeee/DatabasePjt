@@ -1,9 +1,6 @@
 package view;
 
-import control.AnswerDAO;
-import control.AnswerVO;
-import control.BoardDAO;
-import control.BoardVO;
+import control.*;
 import model.AnswerDAOImpl;
 import model.BoardDAOImpl;
 
@@ -53,12 +50,27 @@ public class AnswerUpdate extends JFrame {
         lblNewLabel_2.setBounds(12, 240, 57, 15);
         getContentPane().add(lblNewLabel_2);
 
-        writer = new JTextField(vo.getDocterId());
+        writer = new JTextField(vo.getDoctorId());
         writer.setBounds(81, 237, 116, 21);
         writer.setBackground(Color.white);
         writer.setEditable(false);
         getContentPane().add(writer);
         writer.setColumns(10);
+
+        JButton profile = new JButton("의사프로필");
+        profile.setBounds(220, 237, 120, 23);
+        profile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                AnswerDAO dao = new AnswerDAOImpl();
+
+
+                dao.profile(vo.getDoctorId());
+                System.out.println(vo.getDoctorId());
+
+            }
+        });
+        getContentPane().add(profile);
 
 
         JButton btnDel = new JButton("답변삭제");

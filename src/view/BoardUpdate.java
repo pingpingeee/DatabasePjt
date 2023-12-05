@@ -147,7 +147,7 @@ public class BoardUpdate extends JFrame {
         answerTitle.setBounds(12, 330, 57, 15);
         getContentPane().add(answerTitle);
 
-        JTextField writerDoctor = new JTextField(voD.getDocterId());
+        JTextField writerDoctor = new JTextField(voD.getDoctorId());
         writerDoctor.setBounds(81, 327, 340, 21);
         writerDoctor.setBackground(Color.white);
         getContentPane().add(writerDoctor);
@@ -173,11 +173,15 @@ public class BoardUpdate extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String answerTitle = writerDoctor.getText();
                 String answerText = answerArea.getText();
-                AnswerDAO dao = new AnswerDAOImpl();
-                AnswerVO vo = new AnswerVO();
-                vo.setTitle(answerTitle);
-                vo.setContent(answerText);
-                dao.insert(vo);
+                if(answerArea.getText().isEmpty() || writerDoctor.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "빈칸을 채워주세요.", "경고", JOptionPane.WARNING_MESSAGE);
+                }else {
+                    AnswerDAO dao = new AnswerDAOImpl();
+                    AnswerVO vo = new AnswerVO();
+                    vo.setTitle(answerTitle);
+                    vo.setContent(answerText);
+                    dao.insert(vo);
+                }
             }
         });
         getContentPane().add(btnAnswer1);

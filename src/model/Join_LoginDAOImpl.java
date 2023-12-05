@@ -56,8 +56,12 @@ public class Join_LoginDAOImpl implements Join_LoginDAO {
                 case 0:
                     JOptionPane.showMessageDialog(null, "아이디 사용가능.",
                             "알림", JOptionPane.INFORMATION_MESSAGE);
-                    join_screen.getJoinButton().setEnabled(true);
-                    joinScreenDoctor.getJoinButton().setEnabled(true);
+                    if (join_screen != null) {
+                        join_screen.getJoinButton().setEnabled(true);
+                    }
+                    if (joinScreenDoctor != null) {
+                        joinScreenDoctor.getJoinButton().setEnabled(true);
+                    }
                     DBConnector.releaseConnection(conn);
                     break;
                 case 1:
