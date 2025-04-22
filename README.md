@@ -31,7 +31,36 @@
 
 
 
-# ✅ 구현 기능
+### 🏥 의료 게시판 프로젝트
+
+## 📊 데이터베이스 설정 (IntelliJ)
+
+### 설치 및 연결 방법
+
+1. **Database Navigator 플러그인 설치**
+
+1. Settings → Plugins → Database Navigator 검색 및 설치
+
+
+
+2. **데이터베이스 연결**
+
+1. 상단 DB Navigator → Database Browser
+2. '+' 버튼 클릭 후 Oracle 선택
+
+
+
+3. **연결 설정**
+
+| 설정 항목 | 값
+|-----|-----
+| **Connect type** | Custom
+| **URL** | 오라클 실행환경에 맞게 설정
+| **Authentication** | DB 생성자 정보 입력
+| **Drivers** | External library 선택 후 폴더 안 ojdbc11.jar 선택
+
+
+## ✅ 구현 기능
 
 | 번호 | 기능 | 설명
 |-----|-----
@@ -42,7 +71,7 @@
 | **5** | **로그인 기능** | 의사와 사용자 구분 (2023-11-08 추가)
 
 
-# 🔍 구현 필요 & 검토 사항
+## 🔍 구현 필요 & 검토 사항
 
 | 번호 | 기능 | 설명
 |-----|-----
